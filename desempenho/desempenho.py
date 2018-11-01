@@ -153,7 +153,7 @@ def the_thread(test_name, product, x, dx, y, dy, time_lst, ts, data, index):
         "MB_s":MB_s,
         "dif_time": dif_time,
         "geom": geom
-        })
+        }
     result[index] = d
     print("Thread {}.{}#{} finalizada".format(test_name, product.name, index))
         
@@ -195,7 +195,7 @@ def p_test_func(threads, test_name, product_name, x_steps, y_steps, ts=False, ti
             y = y0 + j*dy
             if count < maximo:
                 args = (test_name, product, x, dx, y, dy, time_lst, ts, result, count)
-                t = threading.Thread(target=the_thread,args=*args)
+                t = threading.Thread(target=the_thread,args=args)
                 threads.append(t)
             
             count=count+1
