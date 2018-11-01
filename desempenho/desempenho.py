@@ -39,19 +39,19 @@ def get_data(product, x, y, time):
 
 
 def test_func(test_name, product_name, x_steps, y_steps, ts=False, time_lst=None, maximo=None):
-   product = dc.index.products.get_by_name(product_name)
+    product = dc.index.products.get_by_name(product_name)
     
     print("Running {}:{}  ".format(test_name, product_name))
-    
+
     # calc cell size
     cell_size = get_prod_cell_size(product)
         
     ds_lst = dc.find_datasets(product=product.name)
     product_bbox = datacube.api.core.get_bounds(ds_lst, product.grid_spec.crs)
-    
+
     sp = loads(product_bbox.wkt)
     xs, ys = sp.exterior.xy
-    
+
     min_x = min(xs)
     min_y = min(ys)
     max_x = max(xs)
@@ -59,12 +59,12 @@ def test_func(test_name, product_name, x_steps, y_steps, ts=False, time_lst=None
 
     dx = (max_x - min_x)/(x_steps)
     dy = (max_y - min_y)/(y_steps)
-    
+
     x0 = min_x
     y0 = min_y
     count = 0
     d = []
-    
+
     for i in range(0,x_steps):
         x = x0 + i*dx
         for j in range(0, y_steps):
