@@ -21,6 +21,7 @@ def get_prod_cell_size(product):
 
 
 def get_data(product, x, y, time):
+    print("get_data({}, {}, {}, {}".format(product.name, x, y, time))
     if time is None:
         return dc.load(product = product.name,
                         x = x,
@@ -120,7 +121,8 @@ def test_func(test_name, product_name, x_steps, y_steps, ts=False, time_lst=None
     return gpd.GeoDataFrame(df, geometry='geom', crs={'init': product.grid_spec.crs.crs_str})
 
 
-def the_thread(test_name, product, x, dx, y, dy, time_lst, ts, data, index):
+def the_thread(test_name, product, x, dx, y, dy, time_lst, ts, cell_size, data, index):
+    print("the_thread({},{},{},{},{},{},{},{},{})".format(test_name, product, x, dx, y, dy, time_lst, ts, index))
     if ts is True:
         geom = geometry.Point([x+dx/2, y+dx/2])
     else:
@@ -194,7 +196,7 @@ def p_test_func(threads, test_name, product_name, x_steps, y_steps, ts=False, ti
         for j in range(0, y_steps):
             y = y0 + j*dy
             if count < maximo:
-                args = (test_name, product, x, dx, y, dy, time_lst, ts, result, count)
+                args = (test_name, product, x, dx, y, dy, time_lst, ts, cell_size, result, count)
                 t = threading.Thread(target=the_thread,args=args)
                 threads.append(t)
             
