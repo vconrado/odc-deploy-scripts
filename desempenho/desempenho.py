@@ -143,7 +143,7 @@ def the_thread(test_name, product, x, dx, y, dy, time_lst, ts, cell_size, data, 
 
     d = {        
         "prod": product.name,
-        "count": count, 
+        "count": index, 
         "x0": x, 
         "xf": x+dx, 
         "y0": y, 
