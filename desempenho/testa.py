@@ -14,8 +14,8 @@ options = {
 columns = ["count", "prod", "data_loaded_B", "dif_time", "MB_s", "x_size", "y_size", "time_size", "x0", "xf", "y0", "yf"]
 
 
-if len(sys.argv) < 4:
-    print("Usage: {} label product_name teste_name [#threads]".format(sys.argv[0]))
+if len(sys.argv) < 3:
+    print("Usage: {} label product_name teste_name".format(sys.argv[0]))
     print("Opções:")
     for op in options:
         print("\t{}".format(op))
@@ -24,11 +24,6 @@ if len(sys.argv) < 4:
 label = sys.argv[1]
 product = sys.argv[2]
 teste = sys.argv[3]
-
-if len(sys.argv) > 4:
-    threads = int(sys.argv[4])
-else:
-    threads = 1
 
 if teste not in options:
     print("A opção {} é invalida.".format(teste))
@@ -51,12 +46,8 @@ print("\tMaximo: {}".format(params[4] if params[4] else "Inf"))
 
 print("Testando {}".format(product))
 
-if threads == 1:
-    print("Rodando serial")
-    gdf = test_func(teste, product, *params)
-else:
-    print("Rodando paralelo #{}".format(threads))
-    gdf = p_test_func(threads, teste, product, *params)
+print("Rodando serial")
+gdf = test_func(teste, product, *params)
     
 save_gdf(gdf, product, label,  teste, columns)
-print("Done !")
+print("Done !", sys.argv)

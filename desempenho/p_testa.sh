@@ -17,5 +17,5 @@ for i in $(seq 1 $threads); do
     t_label="${label}_t-${i}"
     dir="/datacube/scripts/desempenho/dados/$t_label"
     mkdir -p $dir
-    python3 /datacube/scripts/desempenho/testa.py $t_label $prod $teste >> $dir/${t_label}.log
+    python3 /datacube/scripts/desempenho/testa.py $t_label $prod $teste >> $dir/${t_label}.log 
 done

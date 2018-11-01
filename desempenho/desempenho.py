@@ -21,7 +21,6 @@ def get_prod_cell_size(product):
 
 
 def get_data(product, x, y, time):
-    print("get_data({}, {}, {}, {}".format(product.name, x, y, time))
     if time is None:
         return dc.load(product = product.name,
                         x = x,
