@@ -214,7 +214,7 @@ def p_test_func(threads, test_name, product_name, x_steps, y_steps, ts=False, ti
 
 
 def save_gdf(gdf, product_name, rodada, subdir, columns=None):
-    base_path = "./dados"
+    base_path = "/datacube/scripts/desempenho/dados"
     directory = "{}/{}/{}/{}".format(base_path, rodada, product_name, subdir)
     if not os.path.exists(directory):
         os.makedirs(directory)

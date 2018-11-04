@@ -42,12 +42,11 @@ print("\tTime List: {}".format(params[3] if params[3] else "All"))
 print("\tMaximo: {}".format(params[4] if params[4] else "Inf"))
 
 
+print("Testando {}.{}.{}".format(label, product, teste))
 
-
-print("Testando {}".format(product))
-
-print("Rodando serial")
 gdf = test_func(teste, product, *params)
     
 save_gdf(gdf, product, label,  teste, columns)
-print("Done !", sys.argv)
+print("Done", sys.argv)
+
+with open("/dados/")

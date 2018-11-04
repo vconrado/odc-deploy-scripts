@@ -13,4 +13,5 @@ threads=$4
 
 dir="/datacube/scripts/desempenho/dados/$label/"
 mkdir -p $dir
-python3 /datacube/scripts/desempenho/testa.py $label $prod $teste $threads >> $dir/testa.log
+#python3 /datacube/scripts/desempenho/testa.py $label $prod $teste $threads >> $dir/testa.log
+python3 /datacube/scripts/desempenho/testa.py $label $prod $teste $threads
