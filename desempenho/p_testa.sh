@@ -15,6 +15,7 @@ for i in $(seq 1 $threads); do
     t_label="${label}_t-${i}"
     dir="/datacube/scripts/desempenho/dados/$label/$i"
     mkdir -p $dir
+    echo "Iniciando execucao thread $i"
     python3 /datacube/scripts/desempenho/testa.py "$label/$i" $prod $teste >> $dir/${t_label}.log & 
     pids[${i}]=$!
     echo "Iniciando thread ${label}-${i} $prod $teste PID " $pids[${i}]

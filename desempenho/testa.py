@@ -11,7 +11,7 @@ options = {
             "ts2": [8, 8, True, ("2017-01-01", "2017-10-30"), 16]
 }
 
-columns = ["count", "prod", "data_loaded_B", "dif_time", "MB_s", "x_size", "y_size", "time_size", "x0", "xf", "y0", "yf"]
+columns = ["count", "prod", "data_loaded_B", "start_time", "end_time", "dif_time", "MB_s", "x_size", "y_size", "time_size", "x0", "xf", "y0", "yf"]
 
 
 if len(sys.argv) < 3:
