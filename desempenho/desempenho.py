@@ -22,6 +22,7 @@ def get_prod_cell_size(product):
 
 
 def get_data(product, x, y, time):
+    print("get_date({}, {}, {}, {})".format(product.name, x, y, time))
     if time is None:
         return dc.load(product = product.name,
                         x = x,
@@ -91,7 +92,7 @@ def test_func(test_name, product_name, x_steps, y_steps, ts=False, time_lst=None
         geom = xy[i]["geom"]
         
         data_loaded_B=data.sizes["x"] * data.sizes["y"] * data.sizes["time"] * cell_size
-        MB_s = (data_loaded_B/(1025*1024))/dif_time
+        MB_s = (data_loaded_B/(1024*1024))/dif_time
         
         d.append({        
                 "prod": product.name,
