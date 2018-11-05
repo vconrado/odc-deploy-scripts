@@ -11,6 +11,8 @@ import os
 import threading
 import time
 import random
+import sys
+
 
 dc = datacube.Datacube()
 
@@ -23,6 +25,7 @@ def get_prod_cell_size(product):
 
 def get_data(product, x, y, time):
     print("get_date({}, {}, {}, {})".format(product.name, x, y, time))
+    sys.stdout.flush()
     if time is None:
         return dc.load(product = product.name,
                         x = x,
@@ -85,6 +88,7 @@ def test_func(test_name, product_name, x_steps, y_steps, ts=False, time_lst=None
     
     for i in indices:
         print("Buscando dados do indice {}".format(i)) 
+        sys.stdout.flush()
         start_time = time.time()
         data = get_data(product, xy[i]["x"], xy[i]["y"], xy[i]["time"])
         end_time = time.time()
