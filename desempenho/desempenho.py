@@ -70,13 +70,13 @@ def test_func(test_name, product_name, x_steps, y_steps, ts=False, time_lst=None
         for j in range(0, y_steps):
             y = y0 + j*dy
             if ts is True:
-                xy.append({"x": x+dx/2, "y": y+dx/2, "time": time_lst, "geom": geometry.Point([x+dx/2, y+dx/2]))
+                xy.append({"x": x+dx/2, "y": y+dx/2, "time": time_lst, "geom": geometry.Point([x+dx/2, y+dx/2])})
             else:
                 xy.append({"x":(x, x+dx), "y": (y, y+dy), "time": time_lst, "geom":geometry.Polygon([[x, y],
                                  [x+dx, y],
                                  [x+dx, y+dy],
                                  [x, y+dy],
-                                 [x, y]]))
+                                 [x, y]])})
     if maximo is None:
         maximo = x_steps*y_steps
     

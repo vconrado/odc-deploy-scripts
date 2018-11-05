@@ -48,5 +48,3 @@ gdf = test_func(teste, product, *params)
     
 save_gdf(gdf, product, label,  teste, columns)
 print("Done", sys.argv)
-
-with open("/dados/")
