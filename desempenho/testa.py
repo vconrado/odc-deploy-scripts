@@ -44,7 +44,7 @@ print("\tMaximo: {}".format(params[4] if params[4] else "Inf"))
 
 print("Testando {}.{}.{}".format(label, product, teste))
 
-gdf = test_func(teste, product, *params)
+gdf = test_func_max(teste, product, *params)
     
 save_gdf(gdf, product, label,  teste, columns)
 print("Done", sys.argv)

@@ -8,11 +8,12 @@ fi
 
 LABEL=$1
 LOOPS=$2
-BASE="/mnt/efs"
+#BASE="/mnt/efs"
+BASE="/data/ODC/data/scripts/desempenho/aws"
 for l in $(seq 1 $LOOPS); do
 	FILE="${BASE}/dados/${LABEL}_${l}"
 	LOG="${BASE}/logs/${LABEL}_${l}.log"
-	dd bs=1M count=1024 if=/dev/zero of=$FILE >> $LOG 2>&1 &
+	dd bs=1M count=1024 if=/dev/zero of=$FILE > $LOG 2>&1 &
 	pids[${i}]=$!
 	echo "Iniciado $l"
 done

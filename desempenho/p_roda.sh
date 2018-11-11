@@ -1,14 +1,13 @@
 #!/bin/bash
 
 
-if [ $# -lt 3 ]; then
-    echo "Usage $(basename $0) teste_label teste #threads"
+if [ $# -lt 2 ]; then
+    echo "Usage $(basename $0) teste_label #threads"
     exit 1
 fi
 
 label=${1:-"label"}
-teste=$2
-threads=$3
+threads=$2
 
 
 for prod in "ls8_level1_epsg32723_1" "ls8_level1_epsg32723_2" "ls8_level1_epsg32723_3" "ls8_level1_epsg32723_4" "ls8_level1_epsg32723_5"; do
