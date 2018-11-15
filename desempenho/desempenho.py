@@ -120,6 +120,78 @@ def test_func(test_name, product_name, x_steps, y_steps, ts=False, time_lst=None
     df = pd.DataFrame(d)
     return gpd.GeoDataFrame(df, geometry='geom', crs={'init': product.grid_spec.crs.crs_str})
 
+
+def test_func_max(test_name, product_name, x_steps, y_steps, ts=False, time_lst=None, maximo=None):
+    product = dc.index.products.get_by_name(product_name)
+    
+    #print("Running {}:{}  ".format(test_name, product_name))
+
+    # calc cell size
+    cell_size = get_prod_cell_size(product)
+        
+    ds_lst = dc.find_datasets(product=product.name)
+
+    d = []
+    xy = []
+
+    for ds in ds_lst:
+        if ts is True:
+            xy.append({"x": (ds.extent.boundingbox.left + ds.extent.boundingbox.right)/2, 
+                       "y": (ds.extent.boundingbox.bottom + ds.extent.boundingbox.top)/2, 
+                       "time": (ds.time.begin.strftime("%Y-%m-%d"), ds.time.end.strftime("%Y-%m-%d")), 
+                       "geom": geometry.Point([
+                               (ds.extent.boundingbox.left + ds.extent.boundingbox.right)/2, 
+                               (ds.extent.boundingbox.bottom + ds.extent.boundingbox.top)/2
+                           ])
+                      })
+        else:
+            xy.append({"x":(ds.extent.boundingbox.left , ds.extent.boundingbox.right), 
+                       "y": (ds.extent.boundingbox.bottom , ds.extent.boundingbox.top), 
+                       "time": (ds.time.begin.strftime("%Y-%m-%d"), ds.time.end.strftime("%Y-%m-%d")), 
+                       "geom":geometry.Polygon([[ds.extent.boundingbox.left, ds.extent.boundingbox.bottom],
+                                 [ds.extent.boundingbox.right, ds.extent.boundingbox.top],
+                                 [ds.extent.boundingbox.right, ds.extent.boundingbox.top],
+                                 [ds.extent.boundingbox.left, ds.extent.boundingbox.top],
+                                 [ds.extent.boundingbox.left, ds.extent.boundingbox.bottom]])})
+    if maximo is None:
+        maximo = x_steps*y_steps
+    
+    indices = random.sample(range(0, x_steps*y_steps), maximo)
+    
+    for i in indices:
+        #print("Buscando dados do indice {}".format(i)) 
+        sys.stdout.flush()
+        start_time = time.time()
+        data = get_data(product, xy[i]["x"], xy[i]["y"], xy[i]["time"])
+        end_time = time.time()
+        dif_time = (end_time - start_time)
+        geom = xy[i]["geom"]
+        
+        data_loaded_B=data.sizes["x"] * data.sizes["y"] * data.sizes["time"] * cell_size
+        MB_s = (data_loaded_B/(1024*1024))/dif_time
+        
+        d.append({        
+                "prod": product.name,
+                "count": i, 
+                "x0": ds.extent.boundingbox.left, 
+                "xf": ds.extent.boundingbox.right, 
+                "y0": ds.extent.boundingbox.bottom, 
+                "yf": ds.extent.boundingbox.top, 
+                "x_size": data.sizes["x"], 
+                "y_size":data.sizes["y"], 
+                "time_size": data.sizes["time"],
+                "data_loaded_B":data_loaded_B,
+                "MB_s":MB_s,
+                "start_time": start_time,
+                "end_time": end_time,
+                "dif_time": dif_time,
+                "geom": geom
+        })
+        data = None
+            
+    df = pd.DataFrame(d)
+    return gpd.GeoDataFrame(df, geometry='geom', crs={'init': product.grid_spec.crs.crs_str})
+
 def save_gdf(gdf, product_name, rodada, subdir, columns=None):
     base_path = "/datacube/scripts/desempenho/dados"
     directory = "{}/{}/{}/{}".format(base_path, rodada, product_name, subdir)
